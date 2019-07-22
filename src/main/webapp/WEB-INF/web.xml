@@ -4,20 +4,40 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
 	
-	<!-- The front controller of this Spring Web application, responsible for handling all application requests -->
+	<!-- 配置 HiddenHttpMethodFilter，可以把 POST 请求转为 PUT 请求或 DELETE 请求 -->
+	<filter>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<url-pattern>/*</url-pattern>		
+	</filter-mapping>
+	
+	<!-- 配置 DispatcherServlet -->
 	<servlet>
 		<servlet-name>springDispatcherServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!--
+			实际上也可以不通过 contextConfigLocation 来配置 SpringMVC 的配置文件，而使用默认的方式
+			默认的配置文件为：/WEB-INF/<servlet-name>-servlet.xml
+			e.g. springDispatcherServlet-servlet.xml
+		-->
+		<!-- 配置 DispatcherServlet 的一个初始化参数 -->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
+			<!-- 配置 SpringMVC 配置文件的位置和名称 -->
 			<param-value>classpath:springmvc.xml</param-value>
 		</init-param>
+		<!-- 当前 web 应用加载的时候创建该 Servlet 实例，而不是第一次请求时创建 -->
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<!-- Map all requests to the DispatcherServlet for handling -->
 	<servlet-mapping>
 		<servlet-name>springDispatcherServlet</servlet-name>
+		<!-- 应答所有请求 -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
