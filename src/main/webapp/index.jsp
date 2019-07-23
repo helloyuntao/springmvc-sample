@@ -7,6 +7,15 @@
 </head>
 <body>
 
+	<a href="springmvc/testCookieValue">Test CookieValue</a>
+	<br><br>
+	
+	<a href="springmvc/testRequestHeader">Test RequestHeader</a>
+	<br><br>
+	
+	<a href="springmvc/testRequestParam?username=yuntao&age=27">Test RequestParam</a>
+	<br><br>
+
 	<form action="springmvc/testRest/1" method="post">
 		<input type="hidden" name="_method" value="DELETE">
 		<input type="submit" value="Test Rest DELETE">

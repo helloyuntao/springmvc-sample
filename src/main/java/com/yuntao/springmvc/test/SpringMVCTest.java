@@ -1,15 +1,52 @@
 package com.yuntao.springmvc.test;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/springmvc")
 public class SpringMVCTest {
 
 	private static final String SUCCESS = "success";
+	
+	/*
+	 * @CookieValue 映射一个 Cookie 值
+	 * value/name：为 Cookie Name
+	 * 其他属性同 @RequestParam
+	 */
+	@RequestMapping("/testCookieValue")
+	public String testCookieValue(@CookieValue("JSESSIONID") String jSessionId) {
+		System.out.println("testCookieValue, jSessionId: " + jSessionId);
+		return SUCCESS;
+	}
+	
+	/*
+	 * @RequestHeader 映射请求头信息
+	 * 用法同 @RequestParam
+	 */
+	@RequestMapping("/testRequestHeader")
+	public String testRequestHeader(@RequestHeader(name = "Accept-Language") String acceptLanguage) {
+		System.out.println("testRequestHeader, acceptLanguage: " + acceptLanguage);
+		return SUCCESS;
+	}
+	
+	/*
+	 * @RequestParam 映射请求参数
+	 * value/name：为请求参数的参数名
+	 * required：该参数是否必须，默认为 true
+	 * defaultValue：请求参数的默认值
+	 */
+	@RequestMapping("/testRequestParam")
+	public String testRequestParam(@RequestParam("username") String username,
+			@RequestParam(value = "age", required = false, defaultValue = "1") int age) {
+		System.out.println("testRequestParam, username: " + username + ", age: " + age);
+		return SUCCESS;
+	}
 	
 	/*
 	 * 如何发送 PUT 请求和 DELETE 请求呢？
