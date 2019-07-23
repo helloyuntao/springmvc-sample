@@ -1,5 +1,11 @@
 package com.yuntao.springmvc.test;
 
+import java.io.IOException;
+import java.io.Writer;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,11 +14,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.yuntao.springmvc.entities.User;
+
 @Controller
 @RequestMapping("/springmvc")
 public class SpringMVCTest {
 
 	private static final String SUCCESS = "success";
+	
+	/*
+	 * Handler 方法可接受的如下 ServletAPI 类型的参数：
+	 * HttpServletRequest、HttpServletResponse、HttpSession、
+	 * java.security.Principal、Locale、
+	 * InputStream、OutputStream、
+	 * Reader、Writer
+	 */
+	@RequestMapping("/testServletAPI")
+	public void testServletAPI(HttpServletRequest request, HttpServletResponse response,
+			Writer out) throws IOException {
+		System.out.println("testServletAPI, " + request + ", " + response);
+		out.write("test writer");
+//		return SUCCESS;
+	}
+	
+	/*
+	 * SpringMVC 会按请求参数名和 POJO 属性名进行自动匹配，自动为该对象填充属性值
+	 * 支持级联属性，e.g. address.city
+	 */
+	@RequestMapping("/testPojo")
+	public String testPojo(User user) {
+		System.out.println("testPojo: " + user);
+		return SUCCESS;
+	}
 	
 	/*
 	 * @CookieValue 映射一个 Cookie 值
