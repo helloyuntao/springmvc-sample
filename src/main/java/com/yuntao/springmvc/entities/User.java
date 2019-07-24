@@ -12,6 +12,18 @@ public class User {
 
 	private Address address;
 
+	public User() {
+		super();
+	}
+
+	public User(String username, String password, String email, Integer age) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.age = age;
+	}
+
 	public String getUsername() {
 		return username;
 	}

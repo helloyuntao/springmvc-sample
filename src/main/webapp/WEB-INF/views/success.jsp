@@ -8,6 +8,25 @@
 <body>
 
 	<h3>Success Page...</h3>
+	<br><br>
+	
+	Time: ${requestScope.time}
+	<br><br>
+	
+	Names: ${requestScope.names}
+	<br><br>
+	
+	Request User: ${requestScope.user}
+	<br><br>
+	
+	Session User: ${sessionScope.user}
+	<br><br>
+
+	Request Pet: ${requestScope.pet}
+	<br><br>
+	
+	Session Pet: ${sessionScope.pet}
+	<br><br>
 
 </body>
 </html>

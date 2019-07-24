@@ -2,6 +2,9 @@ package com.yuntao.springmvc.test;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,14 +16,53 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.yuntao.springmvc.entities.User;
 
 @Controller
 @RequestMapping("/springmvc")
+@SessionAttributes(value = {"user"}, types = {String.class})
 public class SpringMVCTest {
 
 	private static final String SUCCESS = "success";
+	
+	/*
+	 * @SessionAttributes 除了可以通过属性名（value/name）指定需要放到 Session 域中的属性外，
+	 * 还可以通过模型属性的对象类型（types）指定哪些模型属性需要放到 Session 域中
+	 */
+	@RequestMapping("/testSessionAttributes")
+	public String testSessionAttributes(Map<String, Object> map) {
+		map.put("user", new User("Tom", "1234", "tom@gmail.com", 16));
+		map.put("pet", "meow");
+		return SUCCESS;
+	}
+	
+	/*
+	 * 目标方法可以添加 Map 类型的参数
+	 * （实际上也可以是 Model 类型或 ModelMap 类型）
+	 */
+	@RequestMapping("/testMap")
+	public String testMap(Map<String, Object> map) {
+		// org.springframework.validation.support.BindingAwareModelMap
+		System.out.println(map.getClass().getName());
+		map.put("names", Arrays.asList("tom", "jerry"));
+		return SUCCESS;
+	}
+	
+	/*
+	 * 目标方法的返回值可以是 ModelAndView 类型
+	 * 其中可以包含视图和模型信息
+	 * SpringMVC 会把 ModelAndView 的 model 中数据放入到 request 域对象中
+	 */
+	@RequestMapping("/testModelAndView")
+	public ModelAndView testModelAndView() {
+		String viewName = SUCCESS;
+		ModelAndView mv = new ModelAndView(viewName);
+		mv.addObject("time", new Date());
+		return mv;
+	}
 	
 	/*
 	 * Handler 方法可接受的如下 ServletAPI 类型的参数：

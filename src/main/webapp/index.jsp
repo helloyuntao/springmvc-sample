@@ -7,6 +7,15 @@
 </head>
 <body>
 
+	<a href="springmvc/testSessionAttributes">Test SessionAttributes</a>
+	<br><br>
+	
+	<a href="springmvc/testMap">Test Map</a>
+	<br><br>
+	
+	<a href="springmvc/testModelAndView">Test ModelAndView</a>
+	<br><br>
+
 	<a href="springmvc/testServletAPI">Test ServletAPI</a>
 	<br><br>
 
